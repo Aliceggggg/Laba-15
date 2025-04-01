@@ -1,0 +1,78 @@
+#include <iostream>
+#include <Windows.h>
+using namespace std;
+
+class Node
+{
+public:
+  int data;//информационный элемент
+  Node* Next;//указатель на следующий элемент
+};
+typedef Node* TNode;
+
+void DeleteNode(Pnode& Head, Pnode OldNode)
+{
+    Pnode q = Head;
+    if (Head == OldNode)
+        Head = OldNode->next;  // удаляем первый элемент 
+    else
+    {
+        while (q->next != OldNode) // ищем элемент 
+            q = q->next;
+        q->next = OldNode->next;
+    }
+    delete OldNode; // освобождаем память 
+}
+
+
+void Add(int data, TNode& top)//добавление элемента в стек
+{
+  TNode MyNode;
+  if (top == nullptr)
+  {
+    top = new Node;
+    top->Next = nullptr;
+  }
+  else
+  {
+    MyNode = new Node;
+    MyNode->Next = top;
+    top = MyNode;
+  }
+  top->data = data;
+}
+void Show(TNode top)//отображение стека
+{
+  TNode MyNode;
+  while (top != nullptr)
+  {
+    MyNode = top;
+    cout << top->data << " ";//выводим поле
+    top = top->Next;
+    delete MyNode; //освобождение памяти
+  }
+}
+
+int main()
+{
+  SetConsoleOutputCP(CP_UTF8);
+  setlocale(LC_ALL, "Russian");
+  TNode p1 = nullptr;
+  int data1;
+  for (int i = 0; i < 5; i++) 
+  {
+    data1 = 1;
+    Add(data1, p1);
+  }
+
+  int d;
+  cout << "Введите число d: ";
+  cin >> d;
+  Add(d, p1);
+  TNode p2 = p1;
+
+  cout << p2->data;
+  cout << endl;
+
+  Show(p1);//выводим стек
+}
