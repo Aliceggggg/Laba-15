@@ -1,0 +1,89 @@
+#include <iostream>
+#include <Windows.h>
+using namespace std;
+
+class Node
+{
+public:
+    int x;
+    Node* next;
+};
+
+typedef Node* Pnode;
+
+void Show(Pnode& p1) {
+    Pnode MyNode = p1;
+    while (MyNode != NULL)
+    {
+        cout << MyNode->x << " ";
+        MyNode = MyNode->next;
+    }
+}
+
+void DeleteNode(Pnode& Head, Pnode OldNode)
+{
+    Pnode q = Head;
+    if (Head == OldNode)
+        Head = OldNode->next;
+    else
+    {
+        while (q->next != OldNode)
+            q = q->next;
+        q->next = OldNode->next;
+    }
+    delete OldNode;
+}
+
+
+void reverse(Pnode p1) {
+    if (!p1) return;
+    reverse(p1->next);
+    if (p1->x % 7 == 0)
+        cout << p1->x << " ";
+}
+
+
+void Add(int data, Pnode& p1, Pnode& p2)
+{
+    Pnode temp;
+    if (p1 == NULL) {
+        p1 = new Node;
+        p2 = p1;
+        p1->next = NULL;
+    }
+    else {
+        temp = new Node;
+        p2->next = temp;
+        p2 = temp;
+        p2->next = NULL;
+    }
+    p2->x = data;
+}
+
+int main() {
+    SetConsoleOutputCP(CP_UTF8);
+    setlocale(LC_ALL, "Russian");
+    Pnode p1 = NULL, p2 = NULL;
+    int n;
+
+    cout << "Колво: ";
+    cin >> n;
+
+    cout << "Введите " << n << " чисел для списка : ";
+    for (int i = 0; i < n; i++) {
+        cin >> n;
+        Add(n, p1, p2);
+    }
+
+    reverse(p1);
+
+    while (p1 != NULL)
+    {
+        cout << p1->x << " ";
+        p1 = p1->next;
+    }
+
+   
+    
+
+}
